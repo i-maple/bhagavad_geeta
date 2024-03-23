@@ -6,6 +6,8 @@ part 'chapter.g.dart';
 class Chapter {
   @JsonKey(name: 'id')
   int id;
+  @JsonKey(name: 'name')
+  String name;
   @JsonKey(name: 'name_transliterated')
   String nameTransliterated;
   @JsonKey(name: 'name_translated')
@@ -20,6 +22,7 @@ class Chapter {
   String chapterSummary;
   Chapter({
     required this.id,
+    required this.name,
     required this.nameTransliterated,
     required this.nameTranslated,
     required this.versesCount,
