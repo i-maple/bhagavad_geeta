@@ -1,3 +1,4 @@
+import 'package:bhagawad_geeta/providers/theme_provider.dart';
 import 'package:bhagawad_geeta/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,10 +16,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/home',
-      routes: {
-        '/home': (context) => const HomeScreen(),
+    return Consumer(
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: '/home',
+          themeMode: ref.watch(appThemeProvider),
+          darkTheme: ThemeData.dark(),
+          routes: {
+            '/home': (context) => const HomeScreen(),
+          },
+        );
       },
     );
   }

@@ -13,9 +13,9 @@ class Verse {
   int chapterNumber;
   @JsonKey(name: 'text')
   String text;
-  @JsonKey(name: 'translation')
+  @JsonKey(name: 'translations')
   List<TranslationAndCommentary> translation;
-  @JsonKey(name: 'commentary')
+  @JsonKey(name: 'commentaries')
   List<TranslationAndCommentary> commentary;
   Verse({
     required this.id,

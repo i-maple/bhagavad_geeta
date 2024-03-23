@@ -60,6 +60,7 @@ class HttpService {
         String responseAsJson = utf8.decode(res.bodyBytes);
         List<dynamic> responseMap = jsonDecode(responseAsJson);
         List<Verse> verses = responseMap.map((e) => Verse.fromJson(e)).toList();
+        print(verses);
         return verses;
       }
     }

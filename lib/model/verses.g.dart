@@ -11,11 +11,11 @@ Verse _$VerseFromJson(Map<String, dynamic> json) => Verse(
       verseNumber: json['verse_number'] as int,
       chapterNumber: json['chapter_number'] as int,
       text: json['text'] as String,
-      translation: (json['translation'] as List<dynamic>)
+      translation: (json['translations'] as List<dynamic>)
           .map((e) =>
               TranslationAndCommentary.fromJson(e as Map<String, dynamic>))
           .toList(),
-      commentary: (json['commentary'] as List<dynamic>)
+      commentary: (json['commentaries'] as List<dynamic>)
           .map((e) =>
               TranslationAndCommentary.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -26,6 +26,6 @@ Map<String, dynamic> _$VerseToJson(Verse instance) => <String, dynamic>{
       'verse_number': instance.verseNumber,
       'chapter_number': instance.chapterNumber,
       'text': instance.text,
-      'translation': instance.translation,
-      'commentary': instance.commentary,
+      'translations': instance.translation,
+      'commentaries': instance.commentary,
     };
