@@ -11,7 +11,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: ref.watch(appThemeProvider) == ThemeMode.light? Colors.amber.shade100 : Colors.black12,
+      backgroundColor: ref.watch(appThemeProvider) == ThemeMode.light? Colors.amber.shade100 : Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: 'श्रीमद् भगवद् गिता'.text.bold.white.make(),

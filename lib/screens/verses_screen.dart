@@ -26,7 +26,7 @@ class VersesScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: ref.watch(appThemeProvider) == ThemeMode.light
           ? Colors.amber.shade100
-          : Colors.black12,
+          : Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: chapterTitle.text.bold.white.make(),
@@ -65,7 +65,7 @@ class VersesScreen extends ConsumerWidget {
                       backgroundColor:
                           ref.watch(appThemeProvider) == ThemeMode.light
                               ? Colors.amber.shade100
-                              : Colors.black12,
+                              : Colors.black,
                       child: Column(
                         children: [
                           Align(
