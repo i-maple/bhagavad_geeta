@@ -19,8 +19,8 @@ jobs:
           channel: 'stable'
       - run: |
           pwd
-          echo "$api_secret" > service/keys.dart
-          ls config/
+          echo "$api_secret" > lib/service/keys.dart
+          ls lib/service
       - run: flutter clean
       - run: flutter pub get
       - run: flutter build web --release --web-renderer html --base-href /bhagavad_geeta/
