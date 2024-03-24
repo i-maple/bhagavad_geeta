@@ -10,13 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     env:
       my_secret: ${{secrets.ACCESS_TOKEN}}
+      api_secret: ${{secrets.APIKEY}}
 
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-
+      - run: |
+          pwd
+          echo "$api_secret" > service/keys.dart
+          ls config/
       - run: flutter clean
       - run: flutter pub get
       - run: flutter build web --release --web-renderer html --base-href /bhagavad_geeta/
