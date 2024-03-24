@@ -53,26 +53,31 @@ class HomeScreen extends ConsumerWidget {
               AsyncData(:final value) => ListView.builder(
                   itemCount: value.length,
                   shrinkWrap: true,
-                  itemBuilder: (_, index) => Card(
-                    child: ListTile(
-                      title: value[index].name.text.make(),
-                      subtitle: value[index].nameMeaning.text.make(),
-                      leading: value[index].id.text.make(),
-                      trailing: const Icon(Icons.arrow_forward_ios_rounded),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => VersesScreen(
-                            verseId: value[index].id,
-                            chapterTitle: value[index].name,
-                            chapterDescription: value[index].chapterSummary,
-                          ),
+                  itemBuilder: (_, index) => ListTile(
+                    style: ListTileStyle.drawer,
+                    title: '${value[index].name}  -  ${value[index].nameMeaning}'.text.make(),
+                    subtitle: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.list).pOnly(right:12),
+                        '${value[index].versesCount} Verses'.text.make()
+                      ],
+                    ),
+                    leading: value[index].id.text.center.make().box.width(20).height(20).amber400.make(),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => VersesScreen(
+                          verseId: value[index].id,
+                          chapterTitle: value[index].name,
+                          chapterDescription: value[index].chapterSummary,
                         ),
                       ),
                     ),
                   ),
                 ),
-              AsyncError() => activity.error.toString().text.red500.bold.make(),
+              AsyncError() => throw activity.error,
+              // activity.error.toString().text.red500.bold.make()
               _ => const CircularProgressIndicator.adaptive(),
             },
           );

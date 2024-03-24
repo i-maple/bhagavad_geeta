@@ -35,21 +35,25 @@ class VersesScreen extends StatelessWidget {
             final activity = ref.watch(getVerseProvider(verseId));
             final appLang = ref.watch(appLanguageProvider);
             return switch (activity) {
-              AsyncData(:final value) => ListView.builder(
-                  itemCount: value.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => Card(
-                    child: ListTile(
-                      leading: value[index].id.text.make(),
-                      title: value[index].text.text.make(),
-                      subtitle:
-                          value[index].translation.firstWhere((element) => element.language == appLang).description.text.make(),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                      ),
+              AsyncData(:final value) => Column(
+                children: [
+                  ListView.builder(
+                      itemCount: value.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => Card(
+                        child: ListTile(
+                          leading: value[index].id.text.make(),
+                          title: value[index].text.text.make(),
+                          subtitle:
+                              value[index].translation.firstWhere((element) => element.language == appLang).description.text.make(),
+                          trailing: const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                          ),
+                        ),
+                      ).py16(),
                     ),
-                  ).py16(),
-                ).expand(),
+                ],
+              ),
               AsyncError() => activity.error.toString().text.red500.bold.make(),
               _ => const Center(
                   child: CircularProgressIndicator.adaptive(),
@@ -57,7 +61,7 @@ class VersesScreen extends StatelessWidget {
             };
           })
         ],
-      ).p20(),
+      ).p20().scrollVertical(),
     );
   }
 }
