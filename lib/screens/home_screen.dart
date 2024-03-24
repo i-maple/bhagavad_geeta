@@ -1,5 +1,4 @@
 import 'package:bhagawad_geeta/providers/http_provider.dart';
-import 'package:bhagawad_geeta/providers/language_provider.dart';
 import 'package:bhagawad_geeta/providers/theme_provider.dart';
 import 'package:bhagawad_geeta/screens/verses_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: ref.watch(appThemeProvider) == ThemeMode.light? Colors.amber.shade100 : Colors.black12,
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: 'भागवत् गिता'.text.bold.white.make(),
@@ -30,19 +30,6 @@ class HomeScreen extends ConsumerWidget {
               ref.read(appThemeProvider.notifier).toggle();
             },
           ),
-          Switch.adaptive(
-            thumbIcon: MaterialStatePropertyAll(
-              Icon(
-                ref.watch(appLanguageProvider) == 'english'
-                    ? Icons.abc
-                    : Icons.language,
-              ),
-            ),
-            value: ref.watch(appLanguageProvider) != 'hindi',
-            onChanged: (value) {
-              ref.read(appLanguageProvider.notifier).toggle();
-            },
-          )
         ],
       ),
       body: Consumer(
@@ -55,15 +42,27 @@ class HomeScreen extends ConsumerWidget {
                   shrinkWrap: true,
                   itemBuilder: (_, index) => ListTile(
                     style: ListTileStyle.drawer,
-                    title: '${value[index].name}  -  ${value[index].nameMeaning}'.text.make(),
+                    title:
+                        '${value[index].name}  -  ${value[index].nameMeaning}'
+                            .text
+                            .make(),
                     subtitle: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Icon(Icons.list).pOnly(right:12),
+                        const Icon(Icons.list).pOnly(right: 12),
                         '${value[index].versesCount} Verses'.text.make()
                       ],
                     ),
-                    leading: value[index].id.text.center.make().box.width(20).height(20).amber400.make(),
+                    leading: value[index]
+                        .id
+                        .text
+                        .center
+                        .make()
+                        .box
+                        .width(20)
+                        .height(20)
+                        .amber400
+                        .make(),
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -76,8 +75,7 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-              AsyncError() => throw activity.error,
-              // activity.error.toString().text.red500.bold.make()
+              AsyncError() => activity.error.toString().text.red500.bold.make(),
               _ => const CircularProgressIndicator.adaptive(),
             },
           );

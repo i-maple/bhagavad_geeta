@@ -9,7 +9,9 @@ class AppLanguage extends _$AppLanguage {
     return 'english';
   }
 
-  toggle() {
-    state == 'english' ? state = 'hindi' : state = 'english';
+  toggle(String value) {
+    if (state != value) {
+      state = value;
+    }
   }
 }
