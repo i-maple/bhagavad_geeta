@@ -12,13 +12,14 @@ class HiveService {
   Future<Box<T>> openBox<T>(String name) async {
     await Hive.initFlutter();
     if (!(Hive.isAdapterRegistered(1))) {
-      Hive.registerAdapter(ChapterAdapter());
+      Hive.registerAdapter<Chapter>(ChapterAdapter());
     }
     if (!(Hive.isAdapterRegistered(2))) {
-      Hive.registerAdapter(TranslationAndCommentaryAdapter());
+      Hive.registerAdapter<TranslationAndCommentary>(
+          TranslationAndCommentaryAdapter());
     }
     if (!(Hive.isAdapterRegistered(3))) {
-      Hive.registerAdapter(VerseAdapter());
+      Hive.registerAdapter<Verse>(VerseAdapter());
     }
     if (!(Hive.isBoxOpen(name))) {
       return await Hive.openBox<T>(name);
@@ -26,24 +27,21 @@ class HiveService {
     return Hive.box<T>(name);
   }
 
-  Future<void> storeChapters(List<Chapter> datas) async {
-    final box = await openBox<Chapter>('chapters');
-    await box.addAll(datas);
+  Future<void> add<T>({required List<T> datas, required String boxName}) async {
+    try {
+      final box = await openBox<T>(boxName);
+      await box.addAll(datas);
+    } catch (e) {
+      rethrow;
+    }
   }
 
-  Future<void> storeVerses(List<Verse> datas, String chapterId) async {
-    final box = await openBox<List<Verse>>('verses');
-    await box.put(chapterId, datas);
-  }
-
-  Future<List<Chapter>> getChapters() async {
-    final box = await openBox<Chapter>('chapters');
-    return box.values.cast<Chapter>().toList();
-  }
-
-  Future<List<Verse>> getVerse(String chapterId) async {
-    final box = await openBox<List<Verse>>('verses');
-    List<Verse> value = (box.get(chapterId) ?? []).cast<Verse>();
-    return value;
+  Future<List<T>> get<T>(String boxName) async {
+    try {
+      final box = await openBox<T>(boxName);
+      return box.values.cast<T>().toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 }

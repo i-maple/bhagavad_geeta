@@ -37,7 +37,7 @@ class HttpService {
   }
 
   Future<List<Chapter>> getChapters() async {
-    List<Chapter> chapters = await _hiveInstance.getChapters();
+    List<Chapter> chapters = await _hiveInstance.get<Chapter>('chapters');
     if (chapters.isNotEmpty) {
       return chapters;
     }
@@ -49,7 +49,7 @@ class HttpService {
         List<dynamic> responseMap = jsonDecode(responseAsJson);
         List<Chapter> chapters =
             responseMap.map((e) => Chapter.fromJson(e)).toList();
-        await _hiveInstance.storeChapters(chapters);
+        await _hiveInstance.add<Chapter>(datas: chapters, boxName: 'chapters');
         return chapters;
       }
     }
@@ -58,7 +58,9 @@ class HttpService {
   }
 
   Future<List<Verse>> getVerses(int chapter) async {
-    List<Verse> verses = await _hiveInstance.getVerse(chapter.toString());
+    print('object');
+    List<Verse> verses = await _hiveInstance.get<Verse>('verse$chapter');
+    print(verses);
     if (verses.isNotEmpty) {
       return verses;
     }
@@ -70,10 +72,7 @@ class HttpService {
         String responseAsJson = utf8.decode(res.bodyBytes);
         List<dynamic> responseMap = jsonDecode(responseAsJson);
         List<Verse> verses = responseMap.map((e) => Verse.fromJson(e)).toList();
-        await _hiveInstance.storeVerses(
-          verses,
-          chapter.toString(),
-        );
+        await _hiveInstance.add<Verse>(datas: verses, boxName: 'verse$chapter');
         return verses;
       }
     }
