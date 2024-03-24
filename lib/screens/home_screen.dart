@@ -14,7 +14,7 @@ class HomeScreen extends ConsumerWidget {
       backgroundColor: ref.watch(appThemeProvider) == ThemeMode.light? Colors.amber.shade100 : Colors.black12,
       appBar: AppBar(
         backgroundColor: Colors.amber,
-        title: 'भागवत् गिता'.text.bold.white.make(),
+        title: 'श्रीमद् भगवद् गिता'.text.bold.white.make(),
         centerTitle: true,
         actions: [
           Switch.adaptive(
